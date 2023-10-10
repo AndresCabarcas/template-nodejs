@@ -20,22 +20,25 @@ app.get("/", (req, res) => {
 // html function 
 const html = require('./HTMLCreator.js'); 
 app.post("/api/email", async (req, res) => {
-    const { sAsunto, sEmail, sNombre, sMessage } = req.body;
-    
-    try {
-      const data = await resend.emails.send({
-        from: 'pqrs@asorecicol.com',
-        to: 'pqrs.asorecicol@gmail.com',
-        subject: sAsunto,
-        html: html(sAsunto, sEmail, sNombre, sMessage)
-      });
+  const { sAsunto, sEmail, sNombre, sMessage } = req.body;
+  
+  console.log("Datos recibidos en req.body:", req.body);
+  console.log("sAsunto:", sAsunto);
 
-      console.log(data);
-      res.json({ message: 'Mensaje enviado exitosamente...' });
-    } catch (error) {
-      console.error(error);
-      res.json(error);
-    }
+  try {
+    const data = await resend.emails.send({
+      from: 'pqrs@asorecicol.com',
+      to: sEmail,
+      subject: sAsunto,
+      html: html(sAsunto, sEmail, sNombre, sMessage)
+    });
+
+    console.log(data);
+    res.json({ message: 'Mensaje enviado exitosamente...' });
+  } catch (error) {
+    console.error(error);
+    res.json(error);
+  }
 });
 
 app.listen(port, () => {
