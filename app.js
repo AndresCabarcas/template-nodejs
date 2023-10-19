@@ -28,7 +28,7 @@ app.post("/api/email", async (req, res) => {
   try {
     const data = await resend.emails.send({
       from: 'pqrs@asorecicol.com',
-      to: sEmail,
+      to: 'pqrs.asorecicol@gmail.com',
       subject: sAsunto,
       html: html(sAsunto, sEmail, sNombre, sMessage)
     });
